@@ -1,4 +1,4 @@
-package com.mbto;
+package com.goorea.mbto;
 
 import com.facebook.react.ReactActivity;
 
