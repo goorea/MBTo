@@ -14,6 +14,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A092E93C90113EC7430B3335 /* libPods-MBTo-MBToTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7204484E56D4C5A958F62371 /* libPods-MBTo-MBToTests.a */; };
 		DA147D96E21284C8950F2DD6 /* libPods-MBTo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D3BB3431DBEC50062E0539 /* libPods-MBTo.a */; };
+		2AB7AEC75B404C52918A7AA7 /* BMHANNAPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18A41CF8099849B7823F2745 /* BMHANNAPro.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		B4AE8AD9F6F1B0653BCF3F0B /* Pods-MBTo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBTo.release.xcconfig"; path = "Target Support Files/Pods-MBTo/Pods-MBTo.release.xcconfig"; sourceTree = "<group>"; };
 		DF5F65EA59AEAD0FC86CB856 /* Pods-MBTo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBTo.debug.xcconfig"; path = "Target Support Files/Pods-MBTo/Pods-MBTo.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		18A41CF8099849B7823F2745 /* BMHANNAPro.ttf */ = {isa = PBXFileReference; name = "BMHANNAPro.ttf"; path = "../src/assets/fonts/BMHANNAPro.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		57583DFA2AAA43B2BD6B2943 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18A41CF8099849B7823F2745 /* BMHANNAPro.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		6400588BA50E02806BB63ED1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +124,6 @@
 				15AA955E1C849483C7249A4E /* Pods-MBTo-MBToTests.debug.xcconfig */,
 				927E0A3A1F25F4FAA56F9AC6 /* Pods-MBTo-MBToTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -134,6 +143,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6400588BA50E02806BB63ED1 /* Pods */,
+				57583DFA2AAA43B2BD6B2943 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -245,6 +255,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				2AB7AEC75B404C52918A7AA7 /* BMHANNAPro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
