@@ -3,17 +3,19 @@ import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
 
 type P = {
   children: React.ReactNode;
+  isBold?: boolean;
   style?: StyleProp<TextStyle>;
 };
 
-const Text: React.FC<P> = ({ style, children }: P) => {
-  return <RNText style={[style, styles.text]}>{children}</RNText>;
+const Text: React.FC<P> = ({ children, style, isBold = false }: P) => {
+  return <RNText style={[style, styles(isBold).text]}>{children}</RNText>;
 };
 
-const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'BMHANNAPro',
-  },
-});
+const styles = (isBold: boolean) =>
+  StyleSheet.create({
+    text: {
+      fontFamily: isBold ? 'BMHANNAPro' : 'BMHANNAAir',
+    },
+  });
 
 export default Text;

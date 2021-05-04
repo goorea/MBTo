@@ -54,6 +54,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>BMHANNAPro.ttf</string>
+		<string>BMHANNAAir.ttf</string>
 	</array>
 </dict>
 </plist>
