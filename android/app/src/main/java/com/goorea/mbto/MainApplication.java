@@ -1,4 +1,4 @@
-package com.mbto;
+package com.goorea.mbto;
 
 import android.app.Application;
 import android.content.Context;
