@@ -6,14 +6,12 @@ import FeedScreen from '~/screens/FeedScreen';
 import SearchScreen from '~/screens/SearchScreen';
 import HotScreen from '~/screens/HotScreen';
 import MyScreen from '~/screens/MyScreen';
+import { MainTabParamList } from '~/types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const MainNavigation: React.FC = () => {
-  let getIconName: Function = (
-    focused: boolean,
-    value: string,
-  ): JSX.Element => (
+  const getIcon: Function = (focused: boolean, value: string): JSX.Element => (
     <Ionicons size={25} name={focused ? value : `${value}-outline`} />
   );
 
@@ -27,28 +25,28 @@ const MainNavigation: React.FC = () => {
           name="Feed"
           component={FeedScreen}
           options={{
-            tabBarIcon: ({ focused }) => getIconName(focused, 'copy'),
+            tabBarIcon: ({ focused }) => getIcon(focused, 'copy'),
           }}
         />
         <Tab.Screen
           name="Search"
           component={SearchScreen}
           options={{
-            tabBarIcon: ({ focused }) => getIconName(focused, 'search'),
+            tabBarIcon: ({ focused }) => getIcon(focused, 'search'),
           }}
         />
         <Tab.Screen
           name="Hot"
           component={HotScreen}
           options={{
-            tabBarIcon: ({ focused }) => getIconName(focused, 'heart'),
+            tabBarIcon: ({ focused }) => getIcon(focused, 'heart'),
           }}
         />
         <Tab.Screen
           name="My"
           component={MyScreen}
           options={{
-            tabBarIcon: ({ focused }) => getIconName(focused, 'person'),
+            tabBarIcon: ({ focused }) => getIcon(focused, 'person'),
           }}
         />
       </Tab.Navigator>
