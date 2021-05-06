@@ -17,8 +17,6 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-
 const Section: React.FC<{
   title: string;
 }> = ({ children, title }) => {
@@ -48,8 +46,6 @@ const Section: React.FC<{
 };
 
 const App: React.FC = () => {
-  Icon.loadFont();
-
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
