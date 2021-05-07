@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 130,
     paddingHorizontal: 40,
   },
   title: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   registerButton: {
-    marginTop: 80,
+    marginTop: 'auto',
   },
   registerText: {
     color: '#898989',
