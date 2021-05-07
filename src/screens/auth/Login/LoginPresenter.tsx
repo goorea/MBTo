@@ -25,11 +25,13 @@ const LoginPresenter: React.FC<P> = (props: P) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <Text isBold={true} style={styles.title}>
+        <Text size={46} isBold={true} style={styles.title}>
           MBTo
         </Text>
-        <Text style={styles.description}>간편하게 로그인하고</Text>
-        <Text isBold={true} style={styles.description}>
+        <Text size={24} style={styles.description}>
+          간편하게 로그인하고
+        </Text>
+        <Text size={24} isBold={true} style={styles.description}>
           나를 알아봐요
         </Text>
 
@@ -109,12 +111,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   title: {
-    fontSize: 46,
     marginBottom: 10,
   },
   description: {
     textAlign: 'center',
-    fontSize: 24,
   },
   buttonWrapper: {
     paddingTop: 20,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 5,
     borderRadius: 25,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#000',
     height: 46,
     justifyContent: 'center',
@@ -133,9 +133,6 @@ const styles = StyleSheet.create({
   },
   buttonIcon: {
     marginRight: 5,
-    fontSize: 16,
-  },
-  buttonText: {
     fontSize: 16,
   },
   naverIcon: {
@@ -158,33 +155,30 @@ const kakaoStyles = StyleSheet.create({
     styles.buttonIcon,
     { color: 'rgba(0, 0, 0, 0.85)' },
   ]),
-  buttonText: StyleSheet.flatten([
-    styles.buttonText,
-    { color: 'rgba(0, 0, 0, 0.85)' },
-  ]),
+  buttonText: { color: 'rgba(0, 0, 0, 0.85)' },
 });
 
 const naverStyles = StyleSheet.create({
   button: StyleSheet.flatten([styles.button, { backgroundColor: '#1ec800' }]),
-  buttonText: StyleSheet.flatten([styles.buttonText, { color: '#fff' }]),
+  buttonText: { color: '#fff' },
 });
 
 const googleStyles = StyleSheet.create({
   button: StyleSheet.flatten([styles.button, { backgroundColor: '#dd4b39' }]),
   buttonIcon: StyleSheet.flatten([styles.buttonIcon, { color: '#fff' }]),
-  buttonText: StyleSheet.flatten([styles.buttonText, { color: '#fff' }]),
+  buttonText: { color: '#fff' },
 });
 
 const facebookStyles = StyleSheet.create({
   button: StyleSheet.flatten([styles.button, { backgroundColor: '#3b5999' }]),
   buttonIcon: StyleSheet.flatten([styles.buttonIcon, { color: '#fff' }]),
-  buttonText: StyleSheet.flatten([styles.buttonText, { color: '#fff' }]),
+  buttonText: { color: '#fff' },
 });
 
 const appleStyles = StyleSheet.create({
   button: StyleSheet.flatten([styles.button, { backgroundColor: '#000' }]),
   buttonIcon: StyleSheet.flatten([styles.buttonIcon, { color: '#fff' }]),
-  buttonText: StyleSheet.flatten([styles.buttonText, { color: '#fff' }]),
+  buttonText: { color: '#fff' },
 });
 
 export default LoginPresenter;
