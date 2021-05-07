@@ -15,6 +15,7 @@
 		6BD0B99C6E014F3A9A4F971D /* BMHANNAAir.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 756EE6EA7E3046B9B2B95712 /* BMHANNAAir.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A092E93C90113EC7430B3335 /* libPods-MBTo-MBToTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7204484E56D4C5A958F62371 /* libPods-MBTo-MBToTests.a */; };
+		B8BBAD642644B2E200CAA6E8 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BBAD632644B2E200CAA6E8 /* SwiftBridge.swift */; };
 		DA147D96E21284C8950F2DD6 /* libPods-MBTo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D3BB3431DBEC50062E0539 /* libPods-MBTo.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		B8133DB12643B610002C8A00 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		B8133DB22643B610002C8A00 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		B8133DB32643B610002C8A00 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		B8BBAD622644B2E100CAA6E8 /* MBTo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBTo-Bridging-Header.h"; sourceTree = "<group>"; };
+		B8BBAD632644B2E200CAA6E8 /* SwiftBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		DF5F65EA59AEAD0FC86CB856 /* Pods-MBTo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBTo.debug.xcconfig"; path = "Target Support Files/Pods-MBTo/Pods-MBTo.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -112,6 +115,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B8BBAD632644B2E200CAA6E8 /* SwiftBridge.swift */,
+				B8BBAD622644B2E100CAA6E8 /* MBTo-Bridging-Header.h */,
 			);
 			name = MBTo;
 			sourceTree = "<group>";
@@ -262,7 +267,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -469,6 +474,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				B8BBAD642644B2E200CAA6E8 /* SwiftBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15AA955E1C849483C7249A4E /* Pods-MBTo-MBToTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -514,6 +521,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 927E0A3A1F25F4FAA56F9AC6 /* Pods-MBTo-MBToTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = MBToTests/Info.plist;
@@ -543,6 +551,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = MBTo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -555,6 +564,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.goorea.mbto;
 				PRODUCT_NAME = MBTo;
+				SWIFT_OBJC_BRIDGING_HEADER = "MBTo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -569,6 +579,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = MBTo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,6 +592,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.goorea.mbto;
 				PRODUCT_NAME = MBTo;
+				SWIFT_OBJC_BRIDGING_HEADER = "MBTo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -635,14 +647,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -693,14 +704,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;

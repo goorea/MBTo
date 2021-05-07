@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MBTo</string>
+    <string name="kakao_app_key">774246038fb1cd24fcb45da301400a72</string>
 </resources>
