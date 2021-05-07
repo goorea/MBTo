@@ -18,4 +18,4 @@ const styles = (isBold: boolean) =>
     },
   });
 
-export default Text;
+export default React.memo(Text);

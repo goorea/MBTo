@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
-import Login from '~/screens/auth/Login';
+import EmailLogin from '~/screens/auth/EmailLogin';
 
-AppRegistry.registerComponent(appName, () => Login);
+AppRegistry.registerComponent(appName, () => EmailLogin);
