@@ -1,5 +1,7 @@
 import React from 'react';
-import Text from '~/components/Text';
+import { UseFormReturn } from 'react-hook-form/dist/types';
+import { FindEmailFormData } from '~/screens/auth/FindEmail/FindEmailContainer';
+import { Controller, RegisterOptions } from 'react-hook-form';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -13,32 +15,24 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { Controller, RegisterOptions } from 'react-hook-form';
-import { UseFormReturn } from 'react-hook-form/dist/types';
-import { EmailLoginFormData } from './EmailLoginContainer';
+import Text from '~/components/Text';
 
-type P = UseFormReturn<EmailLoginFormData> & {
-  emailRules: RegisterOptions;
-  passwordRules: RegisterOptions;
-  onSubmit: (data: EmailLoginFormData) => Promise<any>;
-  toFindEmail: () => void;
-  toFindPassword: () => void;
-  toRegister: () => void;
+type P = UseFormReturn<FindEmailFormData> & {
+  nameRules: RegisterOptions;
+  telRules: RegisterOptions;
+  onSubmit: (data: FindEmailFormData) => Promise<any>;
 };
 
-const EmailLoginPresenter: React.FC<P> = ({
+const FindEmailPresenter: React.FC<P> = ({
   control,
   formState: { errors, isValid, isSubmitted, isSubmitting },
   handleSubmit,
-  emailRules,
-  passwordRules,
+  nameRules,
+  telRules,
   onSubmit,
-  toFindEmail,
-  toFindPassword,
-  toRegister,
 }: P) => {
-  const passwordField: React.RefObject<TextInput> = React.useRef(null);
-  const focusPasswordField = () => passwordField.current?.focus();
+  const telField: React.RefObject<TextInput> = React.useRef<TextInput>(null);
+  const focusTelField = () => telField.current?.focus();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,55 +56,40 @@ const EmailLoginPresenter: React.FC<P> = ({
               render={({ field }) => (
                 <TextInput
                   value={field.value}
-                  keyboardType="email-address"
                   onChangeText={field.onChange}
-                  onSubmitEditing={focusPasswordField}
-                  placeholder="이메일 주소"
+                  onSubmitEditing={focusTelField}
+                  placeholder="이름"
                   returnKeyType="next"
-                  style={styles.email}
+                  style={styles.name}
                 />
               )}
-              name="email"
-              rules={emailRules}
+              name="name"
+              rules={nameRules}
             />
-            {isSubmitted && errors.email && (
-              <Text style={styles.invalidText}>{errors.email.message}</Text>
+            {isSubmitted && errors.name && (
+              <Text style={styles.invalidText}>{errors.name.message}</Text>
             )}
 
             <Controller
               control={control}
               render={({ field }) => (
                 <TextInput
-                  ref={passwordField}
+                  ref={telField}
                   value={field.value}
-                  secureTextEntry={true}
+                  keyboardType="phone-pad"
                   onChangeText={field.onChange}
                   onSubmitEditing={handleSubmit(onSubmit)}
-                  placeholder="비밀번호"
+                  placeholder="휴대폰 번호"
                   returnKeyType="done"
-                  style={styles.password}
+                  style={styles.tel}
                 />
               )}
-              name="password"
-              rules={passwordRules}
+              name="tel"
+              rules={telRules}
             />
-            {isSubmitted && errors.password && (
-              <Text style={styles.invalidText}>{errors.password.message}</Text>
+            {isSubmitted && errors.tel && (
+              <Text style={styles.invalidText}>{errors.tel.message}</Text>
             )}
-          </View>
-
-          <View style={styles.linksWrapper}>
-            <TouchableOpacity onPress={toFindEmail}>
-              <Text style={styles.link}>이메일 찾기</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity onPress={toFindPassword}>
-              <Text style={styles.link}>비밀번호 찾기</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity onPress={toRegister}>
-              <Text style={styles.link}>회원가입</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
@@ -121,7 +100,7 @@ const EmailLoginPresenter: React.FC<P> = ({
             <ActivityIndicator size="small" color="#fff" />
           ) : (
             <Text isBold={true} style={submitButtonTextStyles(isValid)}>
-              로그인
+              이메일 찾기
             </Text>
           )}
         </TouchableOpacity>
@@ -150,13 +129,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: '100%',
   },
-  email: {
+  name: {
     borderWidth: 1,
     borderColor: '#eee',
     height: 46,
     paddingHorizontal: 10,
   },
-  password: {
+  tel: {
     borderWidth: 1,
     borderColor: '#eee',
     height: 46,
@@ -166,20 +145,6 @@ const styles = StyleSheet.create({
   invalidText: {
     color: 'red',
     marginTop: 10,
-  },
-  linksWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  divider: {
-    width: 1,
-    height: 14,
-    marginHorizontal: 16,
-    backgroundColor: '#eee',
-  },
-  link: {
-    color: '#898989',
   },
 });
 
@@ -195,4 +160,4 @@ const submitButtonTextStyles = (isValid: boolean): StyleProp<TextStyle> => ({
   color: isValid ? '#fff' : '#898989',
 });
 
-export default EmailLoginPresenter;
+export default FindEmailPresenter;
