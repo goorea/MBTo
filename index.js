@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
-import FindEmail from '~/screens/auth/FindEmail';
+import FindPassword from '~/screens/auth/FindPassword';
 
-AppRegistry.registerComponent(appName, () => FindEmail);
+AppRegistry.registerComponent(appName, () => FindPassword);
