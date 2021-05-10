@@ -1,19 +1,19 @@
 import React from 'react';
-import { Feed } from '~/types/instances';
-import FeedCard from '~/components/cards/FeedCard';
+import { Post } from '~/types/instances';
+import PostCard from '~/components/cards/PostCard';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 
 type P = {
-  feeds: Feed[];
+  posts: Post[];
 };
 
-const FeedPresenter: React.FC<P> = ({ feeds }: P) => {
+const FeedPresenter: React.FC<P> = ({ posts }: P) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={feeds}
+        data={posts}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <FeedCard feed={item} />}
+        renderItem={({ item }) => <PostCard post={item} />}
       />
     </SafeAreaView>
   );

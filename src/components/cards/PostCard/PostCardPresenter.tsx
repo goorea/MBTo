@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feed } from '~/types/instances';
+import { Post } from '~/types/instances';
 import {
   FlatList,
   Image,
@@ -14,19 +14,19 @@ import { isToday } from '~/functions';
 import Comment from '~/components/Comment';
 
 type P = {
-  feed: Feed;
+  post: Post;
   toggleLike: () => void;
   share: () => any;
 };
 
-const FeedCardPresenter: React.FC<P> = ({ feed, toggleLike, share }: P) => {
+const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
   return (
     <View>
       <View style={styles.header}>
-        <Image source={{ uri: feed.user.avatar }} style={styles.avatar} />
+        <Image source={{ uri: post.user.avatar }} style={styles.avatar} />
         <View style={styles.userInfo}>
-          <Text isBold={true}>{feed.user.nickname}</Text>
-          <Text style={styles.mbti}>{feed.user.mbti}</Text>
+          <Text isBold={true}>{post.user.nickname}</Text>
+          <Text style={styles.mbti}>{post.user.mbti}</Text>
         </View>
 
         <TouchableOpacity onPress={() => null} style={styles.dots}>
@@ -45,8 +45,8 @@ const FeedCardPresenter: React.FC<P> = ({ feed, toggleLike, share }: P) => {
         <View style={styles.icons}>
           <TouchableOpacity onPress={toggleLike}>
             <Ionicons
-              color={feed.liked ? 'red' : '#000'}
-              name={feed.liked ? 'heart' : 'heart-outline'}
+              color={post.liked ? 'red' : '#000'}
+              name={post.liked ? 'heart' : 'heart-outline'}
               style={styles.icon}
               size={22}
             />
@@ -64,20 +64,20 @@ const FeedCardPresenter: React.FC<P> = ({ feed, toggleLike, share }: P) => {
         </View>
 
         <View style={styles.likeCounts}>
-          <Text isBold={true}>좋아요 {feed.like_count}개</Text>
+          <Text isBold={true}>좋아요 {post.like_count}개</Text>
         </View>
 
         <FlatList
           style={styles.comments}
-          data={feed.comments}
+          data={post.comments}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Comment comment={item} />}
         />
 
         <Text style={styles.createdAt}>
-          {isToday(feed.created_at)
-            ? moment(feed.created_at).fromNow()
-            : moment(feed.created_at).format('M월 D일')}
+          {isToday(post.created_at)
+            ? moment(post.created_at).fromNow()
+            : moment(post.created_at).format('M월 D일')}
         </Text>
       </View>
     </View>
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeedCardPresenter;
+export default PostCardPresenter;

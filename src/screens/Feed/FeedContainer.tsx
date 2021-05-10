@@ -1,6 +1,6 @@
 import React from 'react';
 import FeedPresenter from '~/screens/Feed/FeedPresenter';
-import { Feed, User } from '~/types/instances';
+import { Post, User } from '~/types/instances';
 
 type P = {};
 
@@ -13,7 +13,7 @@ const FeedContainer: React.FC<P> = () => {
     mbti: 'ESTJ',
     avatar: 'https://via.placeholder.com/32x32',
   };
-  const feeds: Feed[] = [...Array(10).keys()]
+  const posts: Post[] = [...Array(10).keys()]
     .map(k => k + 1)
     .map(id => ({
       id,
@@ -35,7 +35,7 @@ const FeedContainer: React.FC<P> = () => {
       ],
     }));
 
-  return <FeedPresenter feeds={feeds} />;
+  return <FeedPresenter posts={posts} />;
 };
 
 export default FeedContainer;

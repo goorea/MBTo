@@ -37,7 +37,7 @@ export type Comment = Likeable & {
   user: User;
 };
 
-export type Feed = Likeable & {
+export type Post = Likeable & {
   id: number;
   title: string;
   contents: string;
