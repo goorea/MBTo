@@ -6,12 +6,12 @@ import FeedScreen from '~/screens/FeedScreen';
 import SearchScreen from '~/screens/SearchScreen';
 import HotScreen from '~/screens/HotScreen';
 import MyScreen from '~/screens/MyScreen';
-import { MainTabParamList } from '~/types/navigation';
+import { MainTabParamList } from '~/types/navigations';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const MainNavigation: React.FC = () => {
-  const getIcon: Function = (focused: boolean, value: string): JSX.Element => (
+  const getIcon = (focused: boolean, value: string): React.ReactNode => (
     <Ionicons size={25} name={focused ? value : `${value}-outline`} />
   );
 
