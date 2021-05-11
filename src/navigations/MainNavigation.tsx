@@ -1,55 +1,15 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FeedScreen from '~/screens/FeedScreen';
-import SearchScreen from '~/screens/SearchScreen';
-import HotScreen from '~/screens/HotScreen';
-import MyScreen from '~/screens/MyScreen';
-import { MainTabParamList } from '~/types/navigations';
-
-const Tab = createBottomTabNavigator<MainTabParamList>();
+import { useColorScheme } from 'react-native';
+import TabNavigation from './TabNavigation';
+import { DarkTheme, DefaultTheme } from '~/themes';
 
 const MainNavigation: React.FC = () => {
-  const getIcon = (focused: boolean, value: string): React.ReactNode => (
-    <Ionicons size={25} name={focused ? value : `${value}-outline`} />
-  );
+  const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{
-          showLabel: false,
-        }}>
-        <Tab.Screen
-          name="Feed"
-          component={FeedScreen}
-          options={{
-            tabBarIcon: ({ focused }) => getIcon(focused, 'copy'),
-          }}
-        />
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: ({ focused }) => getIcon(focused, 'search'),
-          }}
-        />
-        <Tab.Screen
-          name="Hot"
-          component={HotScreen}
-          options={{
-            tabBarIcon: ({ focused }) => getIcon(focused, 'heart'),
-          }}
-        />
-        <Tab.Screen
-          name="My"
-          component={MyScreen}
-          options={{
-            tabBarIcon: ({ focused }) => getIcon(focused, 'person'),
-          }}
-        />
-      </Tab.Navigator>
+    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+      <TabNavigation />
     </NavigationContainer>
   );
 };

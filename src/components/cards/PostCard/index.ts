@@ -1,3 +1,3 @@
-import PostCardContainer from 'src/components/cards/PostCard/PostCardContainer';
+import PostCardContainer from './PostCardContainer';
 
 export default PostCardContainer;
