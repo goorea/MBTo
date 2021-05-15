@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { isToday } from '~/functions';
 import Comment from '~/components/Comment';
+import { useTheme } from '@react-navigation/native';
 
 type P = {
   post: Post;
@@ -20,6 +21,8 @@ type P = {
 };
 
 const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
+  const { colors } = useTheme();
+
   return (
     <View>
       <View style={styles.header}>
@@ -45,17 +48,23 @@ const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
         <View style={styles.icons}>
           <TouchableOpacity onPress={toggleLike}>
             <Ionicons
-              color={post.liked ? 'red' : '#000'}
+              color={post.liked ? 'red' : colors.text}
               name={post.liked ? 'heart' : 'heart-outline'}
               style={styles.icon}
               size={22}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => null}>
-            <Ionicons name="chatbubble-outline" style={styles.icon} size={20} />
+            <Ionicons
+              color={colors.text}
+              name="chatbubble-outline"
+              style={styles.icon}
+              size={20}
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={share}>
             <Ionicons
+              color={colors.text}
               name="share-social-outline"
               style={styles.icon}
               size={20}

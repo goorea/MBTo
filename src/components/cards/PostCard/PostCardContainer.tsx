@@ -1,5 +1,5 @@
 import React from 'react';
-import PostCardPresenter from 'src/components/cards/PostCard/PostCardPresenter';
+import PostCardPresenter from './PostCardPresenter';
 import { Post } from '~/types/instances';
 
 type P = {
