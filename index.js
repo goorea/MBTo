@@ -1,5 +1,6 @@
 import { AppRegistry } from 'react-native';
+import App from '~/App';
 import { name as appName } from './app.json';
-import FindPassword from '~/screens/auth/FindPassword';
+import '~/plugins/moment';
 
-AppRegistry.registerComponent(appName, () => FindPassword);
+AppRegistry.registerComponent(appName, () => App);

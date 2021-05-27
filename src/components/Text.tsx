@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 type P = {
   children: React.ReactNode;
@@ -14,16 +15,23 @@ const Text: React.FC<P> = ({
   size = 16,
   isBold = false,
 }: P) => {
-  return <RNText style={[style, styles(size, isBold).text]}>{children}</RNText>;
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
+
+  return (
+    <RNText style={[styles(size, isBold, colors.foreground).text, style]}>
+      {children}
+    </RNText>
+  );
 };
 
-const styles = (size: number, isBold: boolean) =>
+const styles = (size: number, isBold: boolean, color: string) =>
   StyleSheet.create({
     text: {
       fontFamily: isBold ? 'BMHANNAPro' : 'BMHANNAAir',
       fontSize: size,
       lineHeight: size,
+      color,
     },
   });
 
-export default React.memo(Text);
+export default Text;
