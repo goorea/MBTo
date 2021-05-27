@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
-import { useTheme } from '@react-navigation/native';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 type P = {
   children: React.ReactNode;
@@ -9,10 +9,10 @@ type P = {
 };
 
 const Text: React.FC<P> = ({ children, style, isBold = false }: P) => {
-  const { colors } = useTheme();
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
 
   return (
-    <RNText style={[style, styles(isBold, colors.text).text]}>
+    <RNText style={[styles(isBold, colors.foreground).text, style]}>
       {children}
     </RNText>
   );

@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -12,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { isToday } from '~/functions';
 import Comment from '~/components/Comment';
-import { useTheme } from '@react-navigation/native';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 type P = {
   post: Post;
@@ -21,7 +22,7 @@ type P = {
 };
 
 const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
-  const { colors } = useTheme();
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
 
   return (
     <View>
@@ -48,7 +49,7 @@ const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
         <View style={styles.icons}>
           <TouchableOpacity onPress={toggleLike}>
             <Ionicons
-              color={post.liked ? 'red' : colors.text}
+              color={post.liked ? colors.error : colors.foreground}
               name={post.liked ? 'heart' : 'heart-outline'}
               style={styles.icon}
               size={22}
@@ -56,7 +57,7 @@ const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => null}>
             <Ionicons
-              color={colors.text}
+              color={colors.foreground}
               name="chatbubble-outline"
               style={styles.icon}
               size={20}
@@ -64,7 +65,7 @@ const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
           </TouchableOpacity>
           <TouchableOpacity onPress={share}>
             <Ionicons
-              color={colors.text}
+              color={colors.foreground}
               name="share-social-outline"
               style={styles.icon}
               size={20}
@@ -83,7 +84,7 @@ const PostCardPresenter: React.FC<P> = ({ post, toggleLike, share }: P) => {
           renderItem={({ item }) => <Comment comment={item} />}
         />
 
-        <Text style={styles.createdAt}>
+        <Text style={createdAtStyles(colors.gray200)}>
           {isToday(post.created_at)
             ? moment(post.created_at).fromNow()
             : moment(post.created_at).format('M월 D일')}
@@ -134,12 +135,13 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 4,
   },
-  createdAt: {
-    color: '#898989',
-    padding: 2,
-    marginTop: 8,
-    fontSize: 12,
-  },
+});
+
+const createdAtStyles = (color: string): TextStyle => ({
+  color,
+  padding: 2,
+  marginTop: 8,
+  fontSize: 12,
 });
 
 export default PostCardPresenter;

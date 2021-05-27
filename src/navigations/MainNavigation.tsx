@@ -1,14 +1,24 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { useColorScheme } from 'react-native';
 import TabNavigation from './TabNavigation';
-import { DarkTheme, DefaultTheme } from '~/themes';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 const MainNavigation: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const { dark, colors } = React.useContext<ThemeContextState>(ThemeContext);
 
   return (
-    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
+    <NavigationContainer
+      theme={{
+        dark,
+        colors: {
+          primary: colors.primary,
+          background: colors.background,
+          card: colors.background,
+          text: colors.foreground,
+          border: colors.foreground,
+          notification: colors.foreground,
+        },
+      }}>
       <TabNavigation />
     </NavigationContainer>
   );
