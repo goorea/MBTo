@@ -6,12 +6,14 @@ import MyScreen from '~/screens/MyScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MainTabParamList } from '~/types/navigations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 type P = {};
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const TabNavigation: React.FC<P> = () => {
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
   const getIcon = (
     focused: boolean,
     color: string,
@@ -28,6 +30,7 @@ const TabNavigation: React.FC<P> = () => {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
+        activeTintColor: colors.foreground,
       }}>
       <Tab.Screen
         name="Feed"

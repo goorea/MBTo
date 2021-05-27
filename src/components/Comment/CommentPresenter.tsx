@@ -3,7 +3,7 @@ import Text from '~/components/Text';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Comment } from '~/types/instances';
-import { useTheme } from '@react-navigation/native';
+import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
 
 type P = {
   comment: Comment;
@@ -11,7 +11,7 @@ type P = {
 };
 
 const CommentPresenter: React.FC<P> = ({ comment, toggleLike }: P) => {
-  const { colors } = useTheme();
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
 
   return (
     <View key={comment.id} style={styles.comment}>
@@ -22,7 +22,7 @@ const CommentPresenter: React.FC<P> = ({ comment, toggleLike }: P) => {
 
       <TouchableOpacity onPress={toggleLike} style={styles.commentLike}>
         <Ionicons
-          color={comment.liked ? 'red' : colors.text}
+          color={comment.liked ? colors.error : colors.foreground}
           name={comment.liked ? 'heart' : 'heart-outline'}
           style={styles.icon}
           size={20}
