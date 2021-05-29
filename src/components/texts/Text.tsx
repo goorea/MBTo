@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
-import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import { ThemeContextState } from '~/types/themes';
 
 type P = {
   children: React.ReactNode;
