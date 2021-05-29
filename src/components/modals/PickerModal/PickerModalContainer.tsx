@@ -19,7 +19,7 @@ const PickerModal: React.ForwardRefRenderFunction<PickerModalHandle, P> = (
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
   const show = () => setIsVisible(true);
   const hide = () => setIsVisible(false);
-  const onChangeValue = (v: string | number) => {
+  const onConfirm = (v: string | number) => {
     onChange(v);
     hide();
   };
@@ -35,7 +35,8 @@ const PickerModal: React.ForwardRefRenderFunction<PickerModalHandle, P> = (
       hide={hide}
       items={items}
       value={value}
-      onChangeValue={onChangeValue}
+      onConfirm={onConfirm}
+      onChangeValue={onChange}
       placeholder={placeholder}
     />
   );

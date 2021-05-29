@@ -4,18 +4,23 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import { Picker } from '@react-native-picker/picker';
 import { Item } from '.';
+import { ThemeContextState } from '~/types/themes';
+import { ThemeContext } from '~/contexts/ThemeContext';
 
 type P = {
   isVisible: boolean;
   hide: () => void;
   items: Item[];
   value: string | number;
+  onConfirm: (value: string | number) => any;
   onChangeValue: (value: string | number) => any;
   placeholder?: string;
 };
@@ -25,12 +30,15 @@ const PickerModalPresenter: React.FC<P> = ({
   hide,
   items,
   value,
+  onConfirm,
   onChangeValue,
   placeholder,
 }: P) => {
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
+
   return (
     <Modal isVisible={isVisible} style={styles.modal} onBackdropPress={hide}>
-      <ScrollView style={styles.wrapper}>
+      <ScrollView style={wrapperStyles(colors.background)}>
         {Platform.OS === 'ios' ? (
           <>
             <View style={styles.iosHeader}>
@@ -41,7 +49,7 @@ const PickerModalPresenter: React.FC<P> = ({
               {!!placeholder && <Text isBold={true}>{placeholder}</Text>}
 
               <TouchableOpacity
-                onPress={() => onChangeValue(value || items[0].value)}>
+                onPress={() => onConfirm(value || items[0].value)}>
                 <Text>확인</Text>
               </TouchableOpacity>
             </View>
@@ -49,7 +57,7 @@ const PickerModalPresenter: React.FC<P> = ({
             <Picker
               selectedValue={value}
               onValueChange={onChangeValue}
-              itemStyle={styles.iosPicker}>
+              itemStyle={iosPickerItemStyle(colors.foreground)}>
               {items.map((item, index) => (
                 <Picker.Item
                   key={index}
@@ -62,7 +70,7 @@ const PickerModalPresenter: React.FC<P> = ({
         ) : (
           <View>
             {!!placeholder && (
-              <View style={styles.androidPlaceholder}>
+              <View style={androidPlaceholderStyles(colors.gray300)}>
                 <Text isBold={true}>{placeholder}</Text>
               </View>
             )}
@@ -86,10 +94,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     margin: 0,
   },
-  wrapper: {
-    maxHeight: 200,
-    backgroundColor: '#fff',
-  },
   iosHeader: {
     position: 'absolute',
     left: 0,
@@ -101,21 +105,29 @@ const styles = StyleSheet.create({
     padding: 12,
     zIndex: 1,
   },
-  iosPicker: {
-    fontFamily: 'BMHANNAAir',
-    fontSize: 16,
-  },
   androidPicker: {
     paddingVertical: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  androidPlaceholder: {
-    paddingVertical: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#e5e5e5',
-  },
+});
+
+const wrapperStyles = (backgroundColor: string): ViewStyle => ({
+  maxHeight: 200,
+  backgroundColor,
+});
+
+const androidPlaceholderStyles = (backgroundColor: string): ViewStyle => ({
+  paddingVertical: 12,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor,
+});
+
+const iosPickerItemStyle = (color: string): TextStyle => ({
+  color,
+  fontFamily: 'BMHANNAAir',
+  fontSize: 16,
 });
 
 export default React.memo(PickerModalPresenter);
