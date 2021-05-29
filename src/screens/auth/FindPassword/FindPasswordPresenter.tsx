@@ -2,20 +2,13 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form/dist/types';
 import { FindPasswordFormData } from '~/screens/auth/FindPassword/FindPasswordContainer';
 import { Controller, RegisterOptions } from 'react-hook-form';
-import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  StyleProp,
-  StyleSheet,
-  TextInput,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import Text from '~/components/Text';
+import { StyleSheet, TextStyle, View } from 'react-native';
+import AuthFrame from '~/components/auth/AuthFrame';
+import InvalidText from '~/components/texts/InvalidText';
+import SubmitButton from '~/components/buttons/SubmitButton';
+import { ThemeContextState } from '~/types/themes';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import TextInput from '~/components/TextInput';
 
 type P = UseFormReturn<FindPasswordFormData> & {
   emailRules: RegisterOptions;
@@ -29,80 +22,46 @@ const FindPasswordPresenter: React.FC<P> = ({
   emailRules,
   onSubmit,
 }: P) => {
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={styles.wrapper}>
-          <Text size={46} isBold={true} style={styles.title}>
-            MBTo
-          </Text>
-          <Text size={24} style={styles.description}>
-            간편하게 로그인하고
-          </Text>
-          <Text size={24} isBold={true} style={styles.description}>
-            나를 알아봐요
-          </Text>
-
-          <View style={styles.formWrapper}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  keyboardType="email-address"
-                  onChangeText={field.onChange}
-                  onSubmitEditing={handleSubmit(onSubmit)}
-                  placeholder="이메일"
-                  returnKeyType="next"
-                  style={styles.email}
-                />
-              )}
-              name="email"
-              rules={emailRules}
+    <AuthFrame title="비밀번호를 찾고">
+      <View style={styles.formWrapper}>
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              keyboardType="email-address"
+              onChangeText={field.onChange}
+              onSubmitEditing={handleSubmit(onSubmit)}
+              placeholder="이메일"
+              returnKeyType="next"
+              style={emailStyles(colors.gray100)}
             />
-            {isSubmitted && errors.email && (
-              <Text style={styles.invalidText}>{errors.email.message}</Text>
-            )}
-          </View>
-        </View>
-
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          style={submitButtonStyles(isValid)}>
-          {isSubmitting ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text isBold={true} style={submitButtonTextStyles(isValid)}>
-              비밀번호 찾기
-            </Text>
           )}
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          name="email"
+          rules={emailRules}
+        />
+        {isSubmitted && errors.email && (
+          <InvalidText>{errors.email.message}</InvalidText>
+        )}
+      </View>
+
+      <SubmitButton
+        onSubmit={handleSubmit(onSubmit)}
+        isValid={isValid}
+        isSubmitting={isSubmitting}
+        text="비밀번호 찾기"
+        style={styles.submitButton}
+      />
+    </AuthFrame>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  wrapper: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 130,
-    paddingHorizontal: 40,
-  },
-  title: {
-    marginBottom: 10,
-  },
-  description: {
-    textAlign: 'center',
-  },
   formWrapper: {
-    marginTop: 20,
-    width: '100%',
+    marginTop: -10,
   },
   email: {
     borderWidth: 1,
@@ -110,22 +69,16 @@ const styles = StyleSheet.create({
     height: 46,
     paddingHorizontal: 10,
   },
-  invalidText: {
-    color: 'red',
+  submitButton: {
     marginTop: 10,
   },
 });
 
-const submitButtonStyles = (isValid: boolean): StyleProp<ViewStyle> => ({
-  width: '100%',
-  height: 56,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: isValid ? '#000' : '#e5e5e5',
-});
-
-const submitButtonTextStyles = (isValid: boolean): StyleProp<TextStyle> => ({
-  color: isValid ? '#fff' : '#898989',
+const emailStyles = (borderColor: string): TextStyle => ({
+  borderWidth: 1,
+  borderColor,
+  height: 46,
+  paddingHorizontal: 10,
 });
 
 export default FindPasswordPresenter;

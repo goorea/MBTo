@@ -1,19 +1,13 @@
 import React, { RefObject, useRef } from 'react';
 import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleProp,
   StyleSheet,
-  TextInput,
+  TextInput as RNTextInput,
   TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import { RegisterFormData } from '~/screens/auth/Register/RegisterContainer';
 import { UseFormReturn } from 'react-hook-form/dist/types';
 import { Controller, RegisterOptions } from 'react-hook-form';
@@ -21,6 +15,12 @@ import { MBTI } from '~/types/instances';
 import PickerModal, {
   PickerModalHandle,
 } from '~/components/modals/PickerModal';
+import AuthFrame from '~/components/auth/AuthFrame';
+import { ThemeContextState } from '~/types/themes';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import InvalidText from '~/components/texts/InvalidText';
+import SubmitButton from '~/components/buttons/SubmitButton';
+import TextInput from '~/components/TextInput';
 
 type P = UseFormReturn<RegisterFormData> & {
   nameRules: RegisterOptions;
@@ -47,8 +47,9 @@ const RegisterPresenter: React.FC<P> = ({
   telRules,
   onSubmit,
 }: P) => {
-  const nicknameField: RefObject<TextInput> = useRef<TextInput>(null);
-  const emailField: RefObject<TextInput> = useRef<TextInput>(null);
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
+  const nicknameField: RefObject<RNTextInput> = useRef<RNTextInput>(null);
+  const emailField: RefObject<RNTextInput> = useRef<RNTextInput>(null);
   const mbtiPickerModal: RefObject<PickerModalHandle> = useRef<PickerModalHandle>(
     null,
   );
@@ -60,133 +61,129 @@ const RegisterPresenter: React.FC<P> = ({
   const focusEmailField = () => emailField.current?.focus();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView>
-          <View style={styles.wrapper}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onSubmitEditing={focusNicknameField}
-                  placeholder="이름"
-                  placeholderTextColor="#898989"
-                  returnKeyType="next"
-                  style={styles.input}
-                />
-              )}
-              name="name"
-              rules={nameRules}
+    <AuthFrame title="회원가입하고" wrapperStyle={styles.frame}>
+      <View style={styles.wrapper}>
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              onChangeText={field.onChange}
+              onSubmitEditing={focusNicknameField}
+              placeholder="이름"
+              placeholderTextColor={colors.gray200}
+              returnKeyType="next"
+              style={inputStyles(colors.gray100)}
             />
-            {isSubmitted && errors.name && (
-              <Text style={styles.invalidText}>{errors.name.message}</Text>
-            )}
+          )}
+          name="name"
+          rules={nameRules}
+        />
+        {isSubmitted && errors.name && (
+          <InvalidText>{errors.name.message}</InvalidText>
+        )}
 
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onSubmitEditing={focusEmailField}
-                  placeholder="닉네임"
-                  placeholderTextColor="#898989"
-                  returnKeyType="next"
-                  style={styles.input}
-                />
-              )}
-              name="nickname"
-              rules={nicknameRules}
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              onChangeText={field.onChange}
+              onSubmitEditing={focusEmailField}
+              placeholder="닉네임"
+              placeholderTextColor={colors.gray200}
+              returnKeyType="next"
+              style={inputStyles(colors.gray100)}
             />
-            {isSubmitted && errors.nickname && (
-              <Text style={styles.invalidText}>{errors.nickname.message}</Text>
-            )}
+          )}
+          name="nickname"
+          rules={nicknameRules}
+        />
+        {isSubmitted && errors.nickname && (
+          <InvalidText>{errors.nickname.message}</InvalidText>
+        )}
 
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onSubmitEditing={mbtiPickerModal.current?.show}
-                  placeholder="이메일"
-                  placeholderTextColor="#898989"
-                  returnKeyType="next"
-                  style={styles.input}
-                />
-              )}
-              name="email"
-              rules={emailRules}
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              onChangeText={field.onChange}
+              onSubmitEditing={mbtiPickerModal.current?.show}
+              placeholder="이메일"
+              placeholderTextColor={colors.gray200}
+              returnKeyType="next"
+              style={inputStyles(colors.gray100)}
             />
-            {isSubmitted && errors.email && (
-              <Text style={styles.invalidText}>{errors.email.message}</Text>
-            )}
-
-            <TouchableOpacity
-              onPress={mbtiPickerModal.current?.show}
-              style={styles.input}>
-              <Text style={fieldTextStyles(watch('mbti'))}>
-                {watch('mbti') || 'MBTI'}
-              </Text>
-            </TouchableOpacity>
-            {isSubmitted && errors.mbti && (
-              <Text style={styles.invalidText}>{errors.mbti.message}</Text>
-            )}
-
-            <TouchableOpacity
-              onPress={genderPickerModal.current?.show}
-              style={styles.input}>
-              <Text style={fieldTextStyles(watch('gender'))}>
-                {watch('gender')
-                  ? watch('gender') === 'female'
-                    ? '여'
-                    : '남'
-                  : '성별'}
-              </Text>
-            </TouchableOpacity>
-            {isSubmitted && errors.gender && (
-              <Text style={styles.invalidText}>{errors.gender.message}</Text>
-            )}
-
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onSubmitEditing={handleSubmit(onSubmit)}
-                  keyboardType="phone-pad"
-                  placeholder="휴대폰 번호"
-                  placeholderTextColor="#898989"
-                  returnKeyType="done"
-                  style={styles.input}
-                />
-              )}
-              name="tel"
-              rules={telRules}
-            />
-            {isSubmitted && errors.tel && (
-              <Text style={styles.invalidText}>{errors.tel.message}</Text>
-            )}
-          </View>
-        </ScrollView>
+          )}
+          name="email"
+          rules={emailRules}
+        />
+        {isSubmitted && errors.email && (
+          <InvalidText>{errors.email.message}</InvalidText>
+        )}
 
         <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          style={submitButtonStyles(isValid)}>
-          {isSubmitting ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text isBold={true} style={submitButtonTextStyles(isValid)}>
-              회원가입
-            </Text>
-          )}
+          onPress={mbtiPickerModal.current?.show}
+          style={pickerStyles(colors.gray100, colors.white)}>
+          <Text
+            style={fieldTextStyles(
+              watch('mbti') ? colors.black : colors.gray200,
+            )}>
+            {watch('mbti') || 'MBTI'}
+          </Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+        {isSubmitted && errors.mbti && (
+          <InvalidText>{errors.mbti.message}</InvalidText>
+        )}
+
+        <TouchableOpacity
+          onPress={genderPickerModal.current?.show}
+          style={pickerStyles(colors.gray100, colors.white)}>
+          <Text
+            style={fieldTextStyles(
+              watch('gender') ? colors.black : colors.gray200,
+            )}>
+            {watch('gender')
+              ? watch('gender') === 'female'
+                ? '여'
+                : '남'
+              : '성별'}
+          </Text>
+        </TouchableOpacity>
+        {isSubmitted && errors.gender && (
+          <InvalidText>{errors.gender.message}</InvalidText>
+        )}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              onChangeText={field.onChange}
+              onSubmitEditing={handleSubmit(onSubmit)}
+              keyboardType="phone-pad"
+              placeholder="휴대폰 번호"
+              placeholderTextColor={colors.gray200}
+              returnKeyType="done"
+              style={inputStyles(colors.gray100)}
+            />
+          )}
+          name="tel"
+          rules={telRules}
+        />
+        {isSubmitted && errors.tel && (
+          <InvalidText>{errors.tel.message}</InvalidText>
+        )}
+      </View>
+
+      <SubmitButton
+        onSubmit={handleSubmit(onSubmit)}
+        isValid={isValid}
+        isSubmitting={isSubmitting}
+        text="회원가입"
+        style={styles.submitButton}
+      />
 
       <Controller
         control={control}
@@ -220,49 +217,46 @@ const RegisterPresenter: React.FC<P> = ({
         name="gender"
         rules={genderRules}
       />
-    </SafeAreaView>
+    </AuthFrame>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  frame: {
+    paddingTop: 40,
   },
   wrapper: {
-    padding: 40,
-    marginVertical: -5,
+    marginTop: -10,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#eee',
-    height: 46,
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    justifyContent: 'center',
-    fontFamily: 'BMHANNAAir',
-    fontSize: 16,
-  },
-  invalidText: {
-    color: 'red',
-    marginVertical: 5,
+  submitButton: {
+    marginTop: 10,
   },
 });
 
-const fieldTextStyles = (value: string | number): StyleProp<TextStyle> => ({
-  color: value ? '#000' : '#898989',
-});
-
-const submitButtonStyles = (isValid: boolean): StyleProp<ViewStyle> => ({
-  width: '100%',
-  height: 56,
+const inputStyles = (borderColor: string): TextStyle => ({
+  borderWidth: 1,
+  borderColor,
+  height: 46,
+  paddingHorizontal: 10,
+  marginTop: 10,
   justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: isValid ? '#000' : '#e5e5e5',
-  marginTop: 'auto',
 });
 
-const submitButtonTextStyles = (isValid: boolean): StyleProp<TextStyle> => ({
-  color: isValid ? '#fff' : '#898989',
+const pickerStyles = (
+  borderColor: string,
+  backgroundColor: string,
+): ViewStyle => ({
+  borderWidth: 1,
+  borderColor,
+  backgroundColor,
+  height: 46,
+  paddingHorizontal: 10,
+  marginTop: 10,
+  justifyContent: 'center',
+});
+
+const fieldTextStyles = (color: string): TextStyle => ({
+  color,
 });
 
 export default RegisterPresenter;

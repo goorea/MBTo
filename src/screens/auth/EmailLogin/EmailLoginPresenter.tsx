@@ -1,13 +1,8 @@
 import React from 'react';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  StyleProp,
   StyleSheet,
-  TextInput,
+  TextInput as RNTextInput,
   TextStyle,
   TouchableOpacity,
   View,
@@ -16,6 +11,12 @@ import {
 import { Controller, RegisterOptions } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form/dist/types';
 import { EmailLoginFormData } from './EmailLoginContainer';
+import AuthFrame from '~/components/auth/AuthFrame';
+import InvalidText from '~/components/texts/InvalidText';
+import { ThemeContextState } from '~/types/themes';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import SubmitButton from '~/components/buttons/SubmitButton';
+import TextInput from '~/components/TextInput';
 
 type P = UseFormReturn<EmailLoginFormData> & {
   emailRules: RegisterOptions;
@@ -37,162 +38,112 @@ const EmailLoginPresenter: React.FC<P> = ({
   toFindPassword,
   toRegister,
 }: P) => {
-  const passwordField: React.RefObject<TextInput> = React.useRef(null);
+  const { colors } = React.useContext<ThemeContextState>(ThemeContext);
+  const passwordField: React.RefObject<RNTextInput> = React.useRef(null);
   const focusPasswordField = () => passwordField.current?.focus();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={styles.wrapper}>
-          <Text size={46} isBold={true} style={styles.title}>
-            MBTo
-          </Text>
-          <Text size={24} style={styles.description}>
-            간편하게 로그인하고
-          </Text>
-          <Text size={24} isBold={true} style={styles.description}>
-            나를 알아봐요
-          </Text>
-
-          <View style={styles.formWrapper}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  value={field.value}
-                  keyboardType="email-address"
-                  onChangeText={field.onChange}
-                  onSubmitEditing={focusPasswordField}
-                  placeholder="이메일"
-                  returnKeyType="next"
-                  style={styles.email}
-                />
-              )}
-              name="email"
-              rules={emailRules}
+    <AuthFrame title="이메일로 로그인하고">
+      <View style={styles.formWrapper}>
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              value={field.value}
+              keyboardType="email-address"
+              onChangeText={field.onChange}
+              onSubmitEditing={focusPasswordField}
+              placeholder="이메일"
+              returnKeyType="next"
+              style={inputStyles(colors.gray100)}
             />
-            {isSubmitted && errors.email && (
-              <Text style={styles.invalidText}>{errors.email.message}</Text>
-            )}
-
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <TextInput
-                  ref={passwordField}
-                  value={field.value}
-                  secureTextEntry={true}
-                  onChangeText={field.onChange}
-                  onSubmitEditing={handleSubmit(onSubmit)}
-                  placeholder="비밀번호"
-                  returnKeyType="done"
-                  style={styles.password}
-                />
-              )}
-              name="password"
-              rules={passwordRules}
-            />
-            {isSubmitted && errors.password && (
-              <Text style={styles.invalidText}>{errors.password.message}</Text>
-            )}
-          </View>
-
-          <View style={styles.linksWrapper}>
-            <TouchableOpacity onPress={toFindEmail}>
-              <Text style={styles.link}>이메일 찾기</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity onPress={toFindPassword}>
-              <Text style={styles.link}>비밀번호 찾기</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            <TouchableOpacity onPress={toRegister}>
-              <Text style={styles.link}>회원가입</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          style={submitButtonStyles(isValid)}>
-          {isSubmitting ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Text isBold={true} style={submitButtonTextStyles(isValid)}>
-              로그인
-            </Text>
           )}
+          name="email"
+          rules={emailRules}
+        />
+        {isSubmitted && errors.email && (
+          <InvalidText>{errors.email.message}</InvalidText>
+        )}
+
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              ref={passwordField}
+              value={field.value}
+              secureTextEntry={true}
+              onChangeText={field.onChange}
+              onSubmitEditing={handleSubmit(onSubmit)}
+              placeholder="비밀번호"
+              returnKeyType="done"
+              style={inputStyles(colors.gray100)}
+            />
+          )}
+          name="password"
+          rules={passwordRules}
+        />
+        {isSubmitted && errors.password && (
+          <InvalidText>{errors.password.message}</InvalidText>
+        )}
+      </View>
+
+      <SubmitButton
+        onSubmit={handleSubmit(onSubmit)}
+        isValid={isValid}
+        isSubmitting={isSubmitting}
+        text="로그인"
+        style={styles.submitButton}
+      />
+
+      <View style={styles.linksWrapper}>
+        <TouchableOpacity onPress={toFindEmail}>
+          <Text style={linkStyles(colors.gray200)}>이메일 찾기</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        <View style={dividerStyles(colors.gray100)} />
+        <TouchableOpacity onPress={toFindPassword}>
+          <Text style={linkStyles(colors.gray200)}>비밀번호 찾기</Text>
+        </TouchableOpacity>
+        <View style={dividerStyles(colors.gray100)} />
+        <TouchableOpacity onPress={toRegister}>
+          <Text style={linkStyles(colors.gray200)}>회원가입</Text>
+        </TouchableOpacity>
+      </View>
+    </AuthFrame>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  wrapper: {
-    flex: 1,
-    alignItems: 'center',
-    paddingTop: 130,
-    paddingHorizontal: 40,
-  },
-  title: {
-    marginBottom: 10,
-  },
-  description: {
-    textAlign: 'center',
-  },
   formWrapper: {
-    marginTop: 20,
-    width: '100%',
-  },
-  email: {
-    borderWidth: 1,
-    borderColor: '#eee',
-    height: 46,
-    paddingHorizontal: 10,
-  },
-  password: {
-    borderWidth: 1,
-    borderColor: '#eee',
-    height: 46,
-    paddingHorizontal: 10,
-    marginTop: 10,
-  },
-  invalidText: {
-    color: 'red',
-    marginTop: 10,
+    marginTop: -10,
   },
   linksWrapper: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
-  divider: {
-    width: 1,
-    height: 14,
-    marginHorizontal: 16,
-    backgroundColor: '#eee',
-  },
-  link: {
-    color: '#898989',
+  submitButton: {
+    marginTop: 10,
   },
 });
 
-const submitButtonStyles = (isValid: boolean): StyleProp<ViewStyle> => ({
-  width: '100%',
-  height: 56,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: isValid ? '#000' : '#e5e5e5',
+const inputStyles = (borderColor: string): TextStyle => ({
+  borderWidth: 1,
+  borderColor,
+  height: 46,
+  paddingHorizontal: 10,
+  marginTop: 10,
 });
 
-const submitButtonTextStyles = (isValid: boolean): StyleProp<TextStyle> => ({
-  color: isValid ? '#fff' : '#898989',
+const dividerStyles = (backgroundColor: string): ViewStyle => ({
+  width: 1,
+  height: 14,
+  marginHorizontal: 16,
+  backgroundColor,
+});
+
+const linkStyles = (color: string): TextStyle => ({
+  color,
 });
 
 export default EmailLoginPresenter;

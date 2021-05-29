@@ -1,15 +1,21 @@
 import React from 'react';
 import LoginPresenter from './LoginPresenter';
+import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { AuthParamList } from '~/types/navigations';
+import { RouteProp } from '@react-navigation/native';
 
-type P = {};
+type P = {
+  navigation: NativeStackNavigationProp<AuthParamList>;
+  route: RouteProp<AuthParamList, 'Login'>;
+};
 
-const LoginContainer: React.FC<P> = () => {
+const LoginContainer: React.FC<P> = ({ navigation }: P) => {
   const kakaoLogin = () => {};
   const naverLogin = () => {};
   const googleLogin = () => {};
   const facebookLogin = () => {};
   const appleLogin = () => {};
-  const emailLogin = () => {};
+  const emailLogin = () => navigation.navigate('EmailLogin');
 
   return (
     <LoginPresenter

@@ -1,15 +1,21 @@
 import React from 'react';
 import EmailLoginPresenter from './EmailLoginPresenter';
 import { RegisterOptions, useForm } from 'react-hook-form';
+import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { AuthParamList } from '~/types/navigations';
+import { RouteProp } from '@react-navigation/native';
 
-type P = {};
+type P = {
+  navigation: NativeStackNavigationProp<AuthParamList>;
+  route: RouteProp<AuthParamList, 'EmailLogin'>;
+};
 
 export type EmailLoginFormData = {
   email: string;
   password: string;
 };
 
-const EmailLoginContainer: React.FC<P> = () => {
+const EmailLoginContainer: React.FC<P> = ({ navigation }: P) => {
   const form = useForm<EmailLoginFormData>({
     mode: 'onChange',
     defaultValues: {
@@ -38,9 +44,9 @@ const EmailLoginContainer: React.FC<P> = () => {
       }, 1000);
     });
   };
-  const toFindEmail = () => {};
-  const toFindPassword = () => {};
-  const toRegister = () => {};
+  const toFindEmail = () => navigation.navigate('FindEmail');
+  const toFindPassword = () => navigation.navigate('FindPassword');
+  const toRegister = () => navigation.navigate('Register');
 
   return (
     <EmailLoginPresenter
