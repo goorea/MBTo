@@ -1,28 +1,37 @@
 import React from 'react';
 import { StyleProp, StyleSheet, Text as RNText, TextStyle } from 'react-native';
-import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import { ThemeContextState } from '~/types/themes';
 
 type P = {
   children: React.ReactNode;
+  size?: number;
   isBold?: boolean;
   style?: StyleProp<TextStyle>;
 };
 
-const Text: React.FC<P> = ({ children, style, isBold = false }: P) => {
+const Text: React.FC<P> = ({
+  children,
+  style,
+  size = 16,
+  isBold = false,
+}: P) => {
   const { colors } = React.useContext<ThemeContextState>(ThemeContext);
 
   return (
-    <RNText style={[styles(isBold, colors.foreground).text, style]}>
+    <RNText style={[styles(size, isBold, colors.foreground).text, style]}>
       {children}
     </RNText>
   );
 };
 
-const styles = (isBold: boolean, color: string) =>
+const styles = (size: number, isBold: boolean, color: string) =>
   StyleSheet.create({
     text: {
       fontFamily: isBold ? 'BMHANNAPro' : 'BMHANNAAir',
-      color: color,
+      fontSize: size,
+      lineHeight: size,
+      color,
     },
   });
 

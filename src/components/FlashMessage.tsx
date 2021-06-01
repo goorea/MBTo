@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import StackFlashMessage from 'react-native-stack-flash-message';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const FlashMessage: React.FC = () => {

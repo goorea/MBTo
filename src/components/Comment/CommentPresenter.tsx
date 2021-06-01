@@ -1,9 +1,10 @@
 import React from 'react';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Comment } from '~/types/instances';
-import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import { ThemeContextState } from '~/types/themes';
 
 type P = {
   comment: Comment;

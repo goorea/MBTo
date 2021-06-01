@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Text from '~/components/Text';
+import Text from '~/components/texts/Text';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { isToday } from '~/functions';
 import Comment from '~/components/Comment';
-import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import { ThemeContextState } from '~/types/themes';
 
 type P = {
   post: Post;

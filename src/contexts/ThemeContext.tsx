@@ -1,43 +1,50 @@
 import React, { createContext, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import {
+  AccentColors,
+  CommonColors,
+  SocialColors,
+  ThemeContextState,
+  Themes,
+} from '~/types/themes';
 
-export type Accents = {
-  primary: string;
-  info: string;
-  warn: string;
-  error: string;
+const commonColors: CommonColors = {
+  black: '#000',
+  white: '#fff',
+  gray100: '#eee',
+  gray200: '#898989',
+  gray300: '#e5e5e5',
 };
 
-const accents: Accents = {
+const accentColors: AccentColors = {
   primary: '#505eeb',
   info: '#5dff66',
   warn: '#ffd656',
   error: '#fb222d',
 };
 
-export type Colors = Accents & {
-  foreground: string;
-  background: string;
-  gray200: string;
-};
-
-export type Themes = {
-  light: Colors;
-  dark: Colors;
+const socialColors: SocialColors = {
+  kakao: '#fee500',
+  naver: '#1ec800',
+  google: '#dd4b39',
+  facebook: '#3b5999',
+  apple: '#000',
 };
 
 const themes: Themes = {
   light: {
-    ...accents,
+    ...commonColors,
+    ...accentColors,
+    ...socialColors,
     foreground: '#000',
     background: '#fff',
-    gray200: '#898989',
   },
   dark: {
-    ...accents,
+    ...commonColors,
+    ...accentColors,
+    ...socialColors,
     foreground: '#fff',
     background: '#000',
-    gray200: '#898989',
   },
 };
 
@@ -46,12 +53,6 @@ export const ThemeContext = createContext<ThemeContextState>({
   toggleTheme: () => null,
   colors: themes.light,
 });
-
-export type ThemeContextState = {
-  dark: boolean;
-  toggleTheme: () => void;
-  colors: Colors;
-};
 
 type P = {
   children?: React.ReactNode;

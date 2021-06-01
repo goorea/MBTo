@@ -2,13 +2,19 @@ import React from 'react';
 import Feed from '~/screens/Feed';
 import SearchScreen from '~/screens/SearchScreen';
 import HotScreen from '~/screens/HotScreen';
-import MyScreen from '~/screens/MyScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MainTabParamList } from '~/types/navigations';
+import { MainTabParamList, RootStackParamList } from '~/types/navigations';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ThemeContext, ThemeContextState } from '~/contexts/ThemeContext';
+import { ThemeContext } from '~/contexts/ThemeContext';
+import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { ThemeContextState } from '~/types/themes';
+import Profile from '~/screens/Profile';
 
-type P = {};
+type P = {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+  route: RouteProp<RootStackParamList, 'TabNavigation'>;
+};
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -54,8 +60,8 @@ const TabNavigation: React.FC<P> = () => {
         }}
       />
       <Tab.Screen
-        name="My"
-        component={MyScreen}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarIcon: ({ focused, color }) => getIcon(focused, color, 'person'),
         }}
